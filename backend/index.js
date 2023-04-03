@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
-import { router } from './src/routes/citiesRoute.js';
+import { cityRouter, citizenRouter } from './src/routes/index.js';
 
 dotenv.config();
 
@@ -15,7 +15,8 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(router);
+app.use(cityRouter);
+app.use(citizenRouter);
 
 const connectToDatabase = async () => {
   try {
