@@ -12,16 +12,12 @@ const groupSchema = new Schema({
 });
 
 const citizenSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
   },
   city_id: {
-    type: Number,
+    type: String,
     required: true,
   },
   groups: [groupSchema],

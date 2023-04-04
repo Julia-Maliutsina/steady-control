@@ -34,8 +34,22 @@ const connectToDatabase = async () => {
 const seedDatabase = async () => {
   await City.deleteMany();
   await Citizen.deleteMany();
-  await City.insertMany(CITIES);
-  await Citizen.insertMany(CITIZENS);
+  const cities = await City.insertMany(CITIES);
+  let citizens = [...CITIZENS];
+  for (let c = 0; c < citizens.length; c++) {
+    switch (citizens[c].city_id) {
+      case 1:
+        citizens[c].city_id = cities[0]._id;
+        break;
+      case 2:
+        citizens[c].city_id = cities[1]._id;
+        break;
+      case 3:
+        citizens[c].city_id = cities[2]._id;
+        break;
+    }
+  }
+  await Citizen.insertMany(citizens);
 };
 
 app.listen(PORT, () => {
