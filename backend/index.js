@@ -5,6 +5,10 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
 import { cityRouter, citizenRouter } from './src/routes/index.js';
+import City from './src/db/models/city.js';
+import Citizen from './src/db/models/citizen.js';
+import { CITIZENS } from './src/constants/citizens.js';
+import { CITIES } from './src/constants/cities.js';
 
 dotenv.config();
 
@@ -27,6 +31,15 @@ const connectToDatabase = async () => {
   }
 };
 
+const seedDatabase = async () => {
+  await City.deleteMany();
+  await Citizen.deleteMany();
+  await City.insertMany(CITIES);
+  await Citizen.insertMany(CITIZENS);
+};
+
 app.listen(PORT, () => {
-  connectToDatabase().then(() => console.log(`Server started on port: ${PORT}`));
+  connectToDatabase()
+    .then(() => seedDatabase())
+    .then(() => console.log(`Server started on port: ${PORT}`));
 });
