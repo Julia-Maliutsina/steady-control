@@ -24,10 +24,8 @@ app.use(citizenRouter);
 
 const connectToDatabase = async () => {
   try {
-    await mongoose.connect(
-      'mongodb://user:password@mongodb_server:27017/citizens?retryWrites=true&w=majority',
-      { useUnifiedTopology: true },
-    );
+    console.log(MONGO_URI);
+    await mongoose.connect(MONGO_URI);
     console.log('Connected to DB');
   } catch (e) {
     console.log(e);
@@ -55,8 +53,8 @@ const seedDatabase = async () => {
   await Citizen.insertMany(citizens);
 };
 
-app.listen(4000, () => {
+app.listen(PORT, () => {
   connectToDatabase()
     .then(() => seedDatabase())
-    .then(() => console.log(`Server started on port: ${4000}`));
+    .then(() => console.log(`Server started on port: ${PORT}`));
 });
