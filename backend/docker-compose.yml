@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  mongo:
+    container_name: mongodb_server
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: admin
+    volumes:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - backend
+  app:
+    container_name: app_server
+    env_file: .env
+    restart: on-failure
+    ports:
+      - 4000:4000
+    build:
+      context: .
+    volumes:
+      - ./:/app
+    command: 'npm start'
+    depends_on:
+      - mongo
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
