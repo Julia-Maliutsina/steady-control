@@ -1,12 +1,19 @@
 import { useState, useEffect } from 'react';
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+  CircularProgress,
+} from '@mui/material';
 
 import getCitizens from './api/getCitizens';
-import getCity from './api/getCity';
+import GroupsAccordion from './components/GroupsAccordion';
 import './App.css';
 
 const App = () => {
-  let [citizens, setCitizens] = useState([]);
-  let [cityData, setCityData] = useState({});
+  let [groups, setGroups] = useState([]);
+  let [expanded, setExpanded] = useState('');
 
   useEffect(() => {
     getCitizens()
@@ -18,40 +25,38 @@ const App = () => {
         }
       })
       .then((data) => {
-        setCitizens(data.citizens);
+        setGroups(data.citizens);
       });
   }, []);
 
-  const showCityData = async (id) => {
-    getCity(id)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          console.log(response);
-        }
-      })
-      .then((data) => {
-        setCityData(data.city);
-      });
-  };
-  const hideCityData = () => {
-    setCityData({});
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
   };
 
   return (
-    <div className="App">
-      <div>{cityData._id}</div>
-      {citizens[0] &&
-        citizens.map((citizen) => (
-          <div
-            key={citizen._id}
-            onMouseEnter={() => showCityData(citizen.city_id)}
-            onMouseLeave={hideCityData}
-          >
-            {citizen.name}
-          </div>
-        ))}
+    <div className="app">
+      <header className="app__title">Список жителей</header>
+      <div>
+        {groups[0] ? (
+          groups.map((group) => (
+            <Accordion
+              key={group.name}
+              expanded={expanded === `panel${group.name}`}
+              onChange={handleChange(`panel${group.name}`)}
+              className="app__groups accordion accordion_level_even"
+            >
+              <AccordionSummary>
+                <Typography>{group.name}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <GroupsAccordion group={group.elements} level="odd" />
+              </AccordionDetails>
+            </Accordion>
+          ))
+        ) : (
+          <CircularProgress size={50} color="secondary" className="app__loader" />
+        )}
+      </div>
     </div>
   );
 };

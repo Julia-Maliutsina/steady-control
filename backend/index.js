@@ -24,7 +24,6 @@ app.use(citizenRouter);
 
 const connectToDatabase = async () => {
   try {
-    console.log(MONGO_URI);
     await mongoose.connect(MONGO_URI);
     console.log('Connected to DB');
   } catch (e) {
