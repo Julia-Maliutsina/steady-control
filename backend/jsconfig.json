@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "baseUrl": "src",
+    "paths": {
+      "*": ["src/*"]
+    }
+  },
+  "include": ["src", "./*config*.js", "index.js"],
+  "exclude": ["node_modules", "dist"]
+}

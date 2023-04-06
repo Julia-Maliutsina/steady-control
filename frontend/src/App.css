@@ -1,38 +1,71 @@
-.App {
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  padding: 15px;
+  background-color: whitesmoke;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.app__title {
+  font-family: 'Lucida Sans Regular', 'Lucida Grande', sans-serif;
+  font-size: 24px;
   text-align: center;
+  margin-bottom: 20px;
+  color: #714571;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.accordion.MuiAccordion-root,
+.accordion.MuiAccordion-root.Mui-expanded {
+  margin: 10px auto;
+  max-width: 500px;
+  font-family: 'Lucida Sans', sans-serif;
+  font-size: 18px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.accordion__group {
+  margin: 10px auto;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.accordion_level_even.MuiAccordion-root {
+  background-color: #f0e8f0;
 }
 
-.App-link {
-  color: #61dafb;
+.accordion_level_odd.MuiAccordion-root {
+  background-color: #dfddec;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.citizens.MuiList-root {
+  background-color: #ffffff;
+  color: #714571;
+  padding: 0;
+}
+
+.citizens__name:not(:first-child) {
+  border-top: 1px solid #714571;
+}
+
+.citizens__name:hover {
+  cursor: pointer;
+  transition-duration: 5s;
+}
+
+.citizen__tooltip {
+  font-family: 'Lucida Sans', sans-serif;
+  font-size: 14px;
+  background-color: #714571;
+  color: #ffffff;
+  padding: 6px;
+  border-radius: 3px;
+}
+
+.app__loader.MuiCircularProgress-root {
+  display: block;
+  margin: 10px auto;
 }
